@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { loginAction } from "./actions";
+import { authClient } from "@/lib/auth-client";
 import {
   Box,
   Button,
@@ -29,18 +29,20 @@ export function LoginClient() {
     setError(null);
 
     const form = new FormData(e.currentTarget);
-    const result = await loginAction({
+
+    const result = await authClient.signIn.email({
       email: form.get("email") as string,
       password: form.get("password") as string,
     });
 
     if (result.error) {
-      setError(result.error);
+      setError(result.error.message ?? "Invalid email or password");
       setLoading(false);
       return;
     }
 
-    if (result.role === "admin") router.push("/admin");
+    const role = result.data?.user?.role;
+    if (role === "admin") router.push("/admin");
     else router.push("/dashboard");
   }
 
@@ -74,10 +76,11 @@ export function LoginClient() {
         />
         <Box sx={{ position: "relative", zIndex: 1, color: "white" }}>
           <Typography variant="h3" fontWeight={700} gutterBottom>
-            Welcome to LEAP
+            LEAF
           </Typography>
           <Typography variant="body1" sx={{ opacity: 0.85, maxWidth: 400 }}>
-            Manage your organization efficiently and securely.
+            Lifelong Education Advancement Framework — Training Requisition
+            System
           </Typography>
         </Box>
       </Box>
@@ -98,17 +101,16 @@ export function LoginClient() {
         <Box sx={{ mb: 5, display: "flex", alignItems: "center", gap: 1.5 }}>
           <Image
             src="/login-logo.png"
-            alt="LEAP logo"
+            alt="LEAF logo"
             width={40}
             height={40}
             style={{ objectFit: "contain" }}
           />
           <Typography variant="h6" fontWeight={700} color="primary">
-            LEAP
+            LEAF
           </Typography>
         </Box>
 
-        {/* Heading */}
         <Typography variant="h5" fontWeight={700} gutterBottom>
           Sign in
         </Typography>
@@ -118,13 +120,11 @@ export function LoginClient() {
 
         <Divider sx={{ mb: 4 }} />
 
-        {/* Form */}
         <Box
           component="form"
           onSubmit={handleSubmit}
           sx={{ display: "flex", flexDirection: "column", gap: 3 }}
         >
-          {/* Email — icon outside so label floats freely */}
           <Box sx={{ display: "flex", alignItems: "flex-end", gap: 1 }}>
             <Email sx={{ color: "primary.main", mb: 0.5 }} />
             <TextField
@@ -138,7 +138,6 @@ export function LoginClient() {
             />
           </Box>
 
-          {/* Password — icon outside, show/hide inside as endAdornment only */}
           <Box sx={{ display: "flex", alignItems: "flex-end", gap: 1 }}>
             <Lock sx={{ color: "primary.main", mb: 0.5 }} />
             <TextField
@@ -193,13 +192,12 @@ export function LoginClient() {
           </Button>
         </Box>
 
-        {/* Footer */}
         <Typography
           variant="caption"
           color="text.disabled"
           sx={{ mt: "auto", pt: 6, textAlign: "center" }}
         >
-          © {new Date().getFullYear()} LEAP. All rights reserved.
+          © {new Date().getFullYear()} LEAF. All rights reserved.
         </Typography>
       </Box>
     </Box>

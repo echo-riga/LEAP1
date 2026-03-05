@@ -1,12 +1,12 @@
-import { betterAuth } from "better-auth"
-import { Pool } from "pg"
+import { betterAuth } from "better-auth";
+import { Pool } from "pg";
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   max: 10,
   idleTimeoutMillis: 30000,
   connectionTimeoutMillis: 2000,
-})
+});
 
 export const auth = betterAuth({
   baseURL: process.env.BETTER_AUTH_URL,
@@ -15,12 +15,19 @@ export const auth = betterAuth({
   session: {
     cookieCache: {
       enabled: true,
-      maxAge: 60 * 5
-    }
+      maxAge: 60 * 5,
+    },
   },
   user: {
     additionalFields: {
-      role: { type: "string", defaultValue: "user" }
-    }
-  }
-})
+      role: {
+        type: "string",
+        defaultValue: "user",
+      },
+      department: {
+        type: "string",
+        required: false, // nullable, not everyone has a department yet
+      },
+    },
+  },
+});

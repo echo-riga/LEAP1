@@ -48,7 +48,7 @@ export function AdminSidebar() {
       >
         <Image
           src="/login-logo.png"
-          alt="LEAF"
+          alt="LEAP"
           width={36}
           height={36}
           style={{ objectFit: "contain" }}

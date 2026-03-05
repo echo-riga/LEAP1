@@ -9,6 +9,8 @@ export default async function AdminLayout({
   children: React.ReactNode;
 }) {
   const session = await auth.api.getSession({ headers: await headers() });
+  if (!session) redirect("/login");
+  if (session.user.role !== "admin") redirect("/unauthorized");
 
   return (
     <div style={{ display: "flex", minHeight: "100vh", background: "#f0f4f0" }}>
