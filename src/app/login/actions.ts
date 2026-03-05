@@ -15,7 +15,7 @@ export async function loginAction({
       body: { email, password },
       headers: await headers(),
     });
-    
+
     const role = result.user.role;
     return { error: null, role };
   } catch (err: any) {

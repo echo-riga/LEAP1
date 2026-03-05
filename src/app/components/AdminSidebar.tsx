@@ -1,0 +1,131 @@
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import Image from "next/image";
+import {
+  Box,
+  Typography,
+  List,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Divider,
+} from "@mui/material";
+import {
+  DashboardOutlined,
+  PeopleOutlined,
+  AssessmentOutlined,
+  SettingsOutlined,
+} from "@mui/icons-material";
+
+const navItems = [
+  { label: "Dashboard", href: "/admin", icon: <DashboardOutlined /> },
+  { label: "Users", href: "/admin/users", icon: <PeopleOutlined /> },
+  { label: "Reports", href: "/admin/reports", icon: <AssessmentOutlined /> },
+  { label: "Settings", href: "/admin/settings", icon: <SettingsOutlined /> },
+];
+
+export function AdminSidebar() {
+  const pathname = usePathname();
+
+  return (
+    <Box
+      sx={{
+        width: 260,
+        minHeight: "100vh",
+        bgcolor: "#1b5e20",
+        display: "flex",
+        flexDirection: "column",
+        py: 3,
+        px: 2,
+        flexShrink: 0,
+      }}
+    >
+      {/* Logo */}
+      <Box
+        sx={{ display: "flex", alignItems: "center", gap: 1.5, px: 1, mb: 4 }}
+      >
+        <Image
+          src="/login-logo.png"
+          alt="LEAF"
+          width={36}
+          height={36}
+          style={{ objectFit: "contain" }}
+        />
+        <Typography
+          variant="h6"
+          fontWeight={700}
+          sx={{ color: "white", letterSpacing: 1 }}
+        >
+          LEAF
+        </Typography>
+      </Box>
+
+      <Typography
+        variant="caption"
+        sx={{
+          color: "rgba(255,255,255,0.4)",
+          px: 1,
+          mb: 1,
+          letterSpacing: 1.5,
+        }}
+      >
+        NAVIGATION
+      </Typography>
+
+      {/* Nav Items */}
+      <List
+        disablePadding
+        sx={{ display: "flex", flexDirection: "column", gap: 0.5 }}
+      >
+        {navItems.map((item) => {
+          const active = pathname === item.href;
+          return (
+            <ListItemButton
+              key={item.href}
+              component={Link}
+              href={item.href}
+              sx={{
+                borderRadius: 2,
+                px: 2,
+                py: 1.2,
+                bgcolor: active ? "rgba(255,255,255,0.15)" : "transparent",
+                "&:hover": { bgcolor: "rgba(255,255,255,0.1)" },
+                transition: "background 0.2s",
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 36,
+                  color: active ? "white" : "rgba(255,255,255,0.6)",
+                }}
+              >
+                {item.icon}
+              </ListItemIcon>
+              <ListItemText
+                primary={item.label}
+                slotProps={{
+                  primary: {
+                    fontSize: 14,
+                    fontWeight: active ? 700 : 400,
+                    color: active ? "white" : "rgba(255,255,255,0.7)",
+                  },
+                }}
+              />
+            </ListItemButton>
+          );
+        })}
+      </List>
+
+      <Divider sx={{ borderColor: "rgba(255,255,255,0.1)", my: 3 }} />
+
+      {/* Bottom */}
+      <Box sx={{ mt: "auto", px: 1 }}>
+        <Typography variant="caption" sx={{ color: "rgba(255,255,255,0.3)" }}>
+          © {new Date().getFullYear()} LEAF
+        </Typography>
+      </Box>
+    </Box>
+  );
+}

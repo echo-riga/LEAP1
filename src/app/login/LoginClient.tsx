@@ -74,7 +74,7 @@ export function LoginClient() {
         />
         <Box sx={{ position: "relative", zIndex: 1, color: "white" }}>
           <Typography variant="h3" fontWeight={700} gutterBottom>
-            Welcome to LEAF
+            Welcome to LEAP
           </Typography>
           <Typography variant="body1" sx={{ opacity: 0.85, maxWidth: 400 }}>
             Manage your organization efficiently and securely.
@@ -98,13 +98,13 @@ export function LoginClient() {
         <Box sx={{ mb: 5, display: "flex", alignItems: "center", gap: 1.5 }}>
           <Image
             src="/login-logo.png"
-            alt="LEAF logo"
+            alt="LEAP logo"
             width={40}
             height={40}
             style={{ objectFit: "contain" }}
           />
           <Typography variant="h6" fontWeight={700} color="primary">
-            LEAF
+            LEAP
           </Typography>
         </Box>
 
@@ -199,7 +199,7 @@ export function LoginClient() {
           color="text.disabled"
           sx={{ mt: "auto", pt: 6, textAlign: "center" }}
         >
-          © {new Date().getFullYear()} LEAF. All rights reserved.
+          © {new Date().getFullYear()} LEAP. All rights reserved.
         </Typography>
       </Box>
     </Box>
